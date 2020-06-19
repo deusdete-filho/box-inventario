@@ -6,10 +6,10 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-import {TextInputProps} from 'react-native';
-import {Container, TextInput, Icon, Error, Text} from './styles';
-import {useField} from '@unform/core';
-import Icon2 from 'react-native-vector-icons/Feather';
+import { TextInputProps } from 'react-native';
+import { Container, TextInput, Icon, Error, Text } from './styles';
+import { useField } from '@unform/core';
+import { Feather } from '@expo/vector-icons';
 
 interface InputValueReference {
   value: string;
@@ -22,13 +22,13 @@ interface InputRef {
   focus(): void;
 }
 const Input: React.RefForwardingComponent<InputRef, InputProps> = (
-  {name, icon, ...rest},
+  { name, ...rest },
   ref,
 ) => {
   const inputEelementRef = useRef<any>(null);
 
-  const {registerField, defaultValue = '', fieldName, error} = useField(name);
-  const inputValueRef = useRef<InputValueReference>({value: defaultValue});
+  const { registerField, defaultValue = '', fieldName, error } = useField(name);
+  const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -56,7 +56,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
       path: 'value',
       setValue(ref: any, value) {
         inputValueRef.current.value = value;
-        inputEelementRef.current.setNativeProps({text: value});
+        inputEelementRef.current.setNativeProps({ text: value });
       },
       clearValue() {
         inputValueRef.current.value = '';
@@ -67,14 +67,9 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 
   return (
     <Container isFocused={isFocused} isErrored={!!error}>
-      <Icon
-        name={icon}
-        size={20}
-        color={isFocused || isFilled ? '#fff' : '#B8E9D7'}
-      />
       <TextInput
         ref={inputEelementRef}
-        placeholderTextColor="#B8E9D7"
+        placeholderTextColor="#b7b7b7"
         defaultValue={defaultValue}
         onFocus={handleInputBlurFocus}
         onBlur={handleInputBlurBlur}
@@ -85,8 +80,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
       />
       {error && (
         <Error>
-          <Icon2 name="alert-circle" color="#C74F4F" size={14} />
-          <Text>{error}</Text>
+          <Feather name="alert-circle" color="#C74F4F" size={14} />
         </Error>
       )}
     </Container>

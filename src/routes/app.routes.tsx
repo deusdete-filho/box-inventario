@@ -1,23 +1,25 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '../pages/Dashboard';
+import Product from '../pages/Product';
+import Category from '../pages/Category';
+import CategoryAdd from '../pages/Category/Add';
+import ProductAdd from '../pages/Product/Add';
+import CategoryShow from '../pages/Category/Show';
+import ProductEdit from '../pages/Product/Edit';
+const App = createStackNavigator();
 
-const App = createBottomTabNavigator();
-const AppStack = createStackNavigator();
 const AppRoutes: React.FC = () => (
   <>
-    <App.Navigator
-      initialRouteName="Equipamentos"
-      tabBarOptions={{
-        activeTintColor: '#474747',
-        keyboardHidesTabBar: true,
-        activeBackgroundColor: '#f1f1f1',
-        inactiveBackgroundColor: '#fff',
-      }}
-    >
-      <App.Screen name="Equipamentos" component={Dashboard} />
+    <App.Navigator headerMode="none" mode="card">
+      <App.Screen name="Dashboard" component={Dashboard} />
+      <App.Screen name="Product" component={Product} />
+      <App.Screen name="ProductAdd" component={ProductAdd} />
+      <App.Screen name="Category" component={Category} />
+      <App.Screen name="CategoryAdd" component={CategoryAdd} />
+      <App.Screen name="CategoryShow" component={CategoryShow} />
+      <App.Screen name="ProductEdit" component={ProductEdit} />
     </App.Navigator>
   </>
 );

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { FlatList, TextInput } from 'react-native';
+import { FlatList } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
@@ -8,7 +8,6 @@ export const Wrapper = styled.View`
   background: #dc7121;
 `;
 export const Header = styled.SafeAreaView`
-  padding: 0px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
@@ -33,8 +32,6 @@ export const Device = styled(RectButton)`
   flex-direction: row;
   margin-bottom: 1px;
   max-width: 500px;
-
-  border-bottom-color: #ccc;
 `;
 export const TitleItem = styled.Text`
   font-size: 16px;
@@ -50,25 +47,6 @@ export const TitleContent = styled.Text`
   align-self: center;
   padding-top: 10px;
 `;
-export const BackButton = styled.TouchableOpacity`
-  padding: 14px;
-`;
-export const EditButton = styled.TouchableOpacity`
-  padding: 14px;
-`;
-export const Input = styled(TextInput)`
-  width: 100%;
-  height: 50px;
-  background: #fff;
-  font-size: 18px;
-  padding-left: 16px;
-  justify-content: center;
-  align-items: center;
-  border-bottom-width: 1px;
-  border-color: #f1f1f1;
-  color: #464646;
-  font-family: Roboto_400Regular;
-`;
 export const TitleContentList = styled.Text`
   flex: 1;
   font-size: 20px;
@@ -76,4 +54,10 @@ export const TitleContentList = styled.Text`
   font-family: Roboto_400Regular;
   align-self: center;
   padding: 30px;
+`;
+export const BackButton = styled.TouchableOpacity`
+  padding: 14px;
+`;
+export const EditButton = styled.TouchableOpacity`
+  padding: 14px;
 `;

@@ -15,8 +15,13 @@ interface LoginCredentials {
   email: string;
   password: string;
 }
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
 interface AuthContextData {
-  user: object;
+  user: User;
   loading: boolean;
   signIn(credentials: LoginCredentials): Promise<void>;
   signOut(): void;
@@ -37,12 +42,12 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function loadStorageData(): Promise<void> {
       const [token, user] = await AsyncStorage.multiGet([
-        '@MCSATI:token',
-        '@MCSATI:user',
+        '@mina:token',
+        '@mina:user',
       ]);
       if (token[1] && user[1]) {
         setData({ token: token[1], user: JSON.parse(user[1]) });
-        api.defaults.headers.Authorization = `Bearer ${token}`;
+        api.defaults.headers.Authorization = `Bearer ${token[1]}`;
       }
       setLoading(false);
     }
@@ -60,8 +65,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
     // salva os dados no storage do navegador
     await AsyncStorage.multiSet([
-      ['@MCSATI:token', token],
-      ['@MCSATI:user', JSON.stringify(user)],
+      ['@mina:token', token],
+      ['@mina:user', JSON.stringify(user)],
     ]);
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -70,7 +75,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   // funcao de fazer logof
   const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@MCSATI:token', '@MCSATI:user']);
+    await AsyncStorage.multiRemove(['@mina:token', '@mina:user']);
 
     setData({} as AuthState);
   }, []);

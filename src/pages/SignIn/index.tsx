@@ -1,33 +1,22 @@
-import React, {useCallback, useRef, useState} from 'react';
-import {StatusBar} from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import getValidationErros from '../../utils/getValidationErros';
 import {
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  View,
   TextInput,
   Alert,
 } from 'react-native';
-import {Form} from '@unform/mobile';
-import {FormHandles} from '@unform/core';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
-import {useAuth} from '../../hooks/auth';
+import { useAuth } from '../../hooks/auth';
 import Background from '../../components/Background';
 
-import Icon from 'react-native-vector-icons/Feather';
-import {useNavigation} from '@react-navigation/native';
-import {
-  Container,
-  ForgotPassword,
-  ForgotPasswordText,
-  Title,
-  CreateAccountButton,
-  CreateAccountButtonText,
-} from './styles';
-import logo from '../../assets/logo.png';
+import { Feather as Icon } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { Container, ContainerLogo } from './styles';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -42,9 +31,7 @@ const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
 
-  const {signIn, user} = useAuth();
-  console.log(user);
-
+  const { signIn, user } = useAuth();
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
       try {
@@ -83,20 +70,20 @@ const SignIn: React.FC = () => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#1CB970" />
       <Background>
         <KeyboardAvoidingView
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          enabled>
+          enabled
+        >
           <ScrollView
             keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{flex: 1}}>
+            contentContainerStyle={{ flex: 1 }}
+          >
             <Container>
-              <Image source={logo} />
-
-              <Title />
-
+              <ContainerLogo>
+                <Icon name="box" size={100} color="#dc7121"></Icon>
+              </ContainerLogo>
               <Form ref={formRef} onSubmit={handleSignIn}>
                 <Input
                   autoCorrect={false}
@@ -125,19 +112,13 @@ const SignIn: React.FC = () => {
                   loading={loading}
                   onPress={() => {
                     formRef.current?.submitForm();
-                  }}>
-                  Entrar
+                  }}
+                >
+                  ENTRAR
                 </Button>
               </Form>
-
-              <ForgotPassword>
-                <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
-              </ForgotPassword>
             </Container>
           </ScrollView>
-          <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
-            <CreateAccountButtonText>CRIAR UMA CONTA</CreateAccountButtonText>
-          </CreateAccountButton>
         </KeyboardAvoidingView>
       </Background>
     </>

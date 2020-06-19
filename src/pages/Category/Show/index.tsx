@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  ScrollView,
-  FlatList,
-  StatusBar,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
+import { StatusBar, Alert, ActivityIndicator } from 'react-native';
 import {
   Wrapper,
   Header,
@@ -14,37 +8,42 @@ import {
   ProductList,
   Device,
   TitleItem,
-  TitleContentList,
+  TitleContent,
   BackButton,
+  TitleContentList,
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { FontAwesome } from '@expo/vector-icons';
-import { useAuth } from '../../hooks/auth';
 import { Feather as Icon } from '@expo/vector-icons';
-import api from '../../services/api';
-import { Input } from './styles';
+import api from '../../../services/api';
+import { Input } from '../../Dashboard/styles';
 export interface Product {
-  [x: string]: any;
   id: string;
   deposit: { id: number; prefix: string };
   product: { id: number; name: string; amount: number };
   shelf: { id: number; name: string };
   plate: { id: number; name: string };
 }
-const Dashboard: React.FC = () => {
+interface RouteParams {
+  id: string;
+  nameCategory: string;
+}
+const CategoryShow: React.FC = () => {
   const { navigate } = useNavigation();
   const naviagtion = useNavigation();
+  const { goBack } = useNavigation();
+
+  const route = useRoute();
+  const { id, nameCategory } = route.params as RouteParams;
 
   const [product, setProduct] = useState<Product[]>([]);
   const [productotal, setProductTotal] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [name, setName] = useState('');
   const [searchResults, setSearchResults] = useState<Product[]>([]);
-
   useEffect(() => {
     api
-      .get('productdeposit/')
+      .get(`productdeposit/${id}/category`)
       .then((response) => {
         setProduct(response.data);
         setSearchResults(response.data);
@@ -57,7 +56,7 @@ const Dashboard: React.FC = () => {
           'Ocorreu um erro ao fazer requisição ao banco de dados',
         );
       });
-  }, [refreshing]);
+  }, [id, refreshing]);
 
   const navigateToProduct = useCallback(
     (id: string) => {
@@ -82,6 +81,7 @@ const Dashboard: React.FC = () => {
     setSearchResults(results);
     setProductTotal(results.length);
   }, [name]);
+
   return (
     <>
       <StatusBar
@@ -91,11 +91,15 @@ const Dashboard: React.FC = () => {
       />
       <Wrapper>
         <Header>
-          <BackButton onPress={() => naviagtion.navigate('Category')}>
-            <FontAwesome name="bars" size={24} color="#fff" />
+          <BackButton
+            onPress={() => {
+              goBack();
+            }}
+          >
+            <Icon name="chevron-left" size={24} color="#fff"></Icon>
           </BackButton>
 
-          <Title>Todos os produtos</Title>
+          <Title>{nameCategory}</Title>
           <BackButton
             onPress={() => {
               naviagtion.navigate('ProductAdd');
@@ -105,7 +109,6 @@ const Dashboard: React.FC = () => {
           </BackButton>
         </Header>
       </Wrapper>
-
       {searchResults ? (
         <Content>
           <ProductList
@@ -146,4 +149,4 @@ const Dashboard: React.FC = () => {
     </>
   );
 };
-export default Dashboard;
+export default CategoryShow;

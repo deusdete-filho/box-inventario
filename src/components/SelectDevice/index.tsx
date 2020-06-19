@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Content, Title, Img} from './styles';
+import { Container, Content, Title, Img } from './styles';
 import suporte from '../../assets/suporte.png';
 import equipamento from '../../assets/equipamento.png';
 const items = [
@@ -28,7 +28,7 @@ const items = [
     img: equipamento,
   },
 ];
-const Card: React.FC = () => (
+const SelectDevice: React.FC = () => (
   <Container>
     {items.map((item) => (
       <Content key={item.key} bgColor={item.bgColor}>
@@ -39,4 +39,4 @@ const Card: React.FC = () => (
   </Container>
 );
 
-export default Card;
+export default SelectDevice;
