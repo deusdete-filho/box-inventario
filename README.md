@@ -37,6 +37,8 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias
     <img alt="Detail" title="#Detail" width="250px" src=".github/6.png">
     <img alt="Detail" title="#Detail" width="250px" src=".github/7.png">
         <img alt="Detail" title="#Detail" width="250px" src=".github/8.png">
+        <img alt="Detail" title="#Detail" width="250px" src=".github/9.png">
+        <img alt="Detail" title="#Detail" width="250px" src=".github/10.png">
 
 </h4>
 
