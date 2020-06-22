@@ -6,9 +6,12 @@ import {
   Title,
   Content,
   Device,
+  AmountContnetItem,
   ProductTitle,
+  AmountPlus,
   BackButton,
   EditButton,
+  AmountQtdItem,
   Amount,
   AmountQtd,
   AmountContnet,
@@ -25,7 +28,12 @@ interface RouteParams {
 export interface Product {
   id: string;
   deposit: { id: number; name: string; prefix: string };
-  product: { id: number; name: string; amount: number };
+  product: {
+    id: number;
+    name: string;
+    amount: number;
+    category: { name: string };
+  };
   shelf: { id: number; name: string };
   plate: { id: number; name: string };
 }
@@ -37,6 +45,8 @@ const Dashboard: React.FC = () => {
   const naviagtion = useNavigation();
   const [products, setProducts] = useState<Product | null>(null);
   const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const [loadingamount, setLoadingamount] = useState(false);
 
   useEffect(() => {
     setLoading(false);
@@ -51,15 +61,43 @@ const Dashboard: React.FC = () => {
           'Erro de conexão',
           'Ocorreu um erro ao fazer requisição ao banco de dados',
         );
+        goBack();
       });
   }, [id]);
-
+  useEffect(() => {
+    setAmount(products?.product.amount);
+  }, [products]);
   const navigateToProductEdit = useCallback(
-    (id: string) => {
-      navigate('ProductEdit', { id });
+    (id: string, idproductdeposit: string) => {
+      navigate('ProductEdit', { id, idproductdeposit });
     },
     [navigate],
   );
+  function productadd() {
+    setLoadingamount(true);
+    api
+      .patch(`product/${products?.product.id}/amountadd`)
+      .then((response) => {
+        setAmount(amount + 1);
+        setLoadingamount(false);
+      })
+      .catch(function (error: string): any {
+        Alert.alert('Erro de conexão', 'Ocorreu um erro ao fazer requisição');
+      });
+  }
+  function productless() {
+    setLoadingamount(true);
+    api
+      .patch(`product/${products?.product.id}/amountless`)
+      .then((response) => {
+        setAmount(amount - 1);
+        setLoadingamount(false);
+      })
+      .catch(function (error: string): any {
+        Alert.alert('Erro', 'Ocorreu um erro ao fazer requisição');
+        setLoadingamount(false);
+      });
+  }
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#dc7121" />
@@ -72,10 +110,10 @@ const Dashboard: React.FC = () => {
           >
             <Icon name="chevron-left" size={24} color="#fff"></Icon>
           </BackButton>
-          <Title>Produto</Title>
+          <Title>{products?.product.name}</Title>
           <EditButton
             onPress={() => {
-              navigateToProductEdit(products?.product.id);
+              navigateToProductEdit(products?.product.id, products?.id);
             }}
           >
             <Icon name="edit" size={24} color="#fff"></Icon>
@@ -86,23 +124,41 @@ const Dashboard: React.FC = () => {
         <>
           {products ? (
             <Content>
-              <ProductTitle>{products.product.name}</ProductTitle>
               <AmountContnet>
-                <Amount>Quantidade</Amount>
-                <AmountQtd>{products.product.amount}</AmountQtd>
+                <AmountPlus
+                  onPress={() => {
+                    productless();
+                  }}
+                >
+                  <Icon name="minus" size={30} color="#dc7121"></Icon>
+                </AmountPlus>
+                {loadingamount ? (
+                  <ActivityIndicator size="large"></ActivityIndicator>
+                ) : (
+                  <AmountQtd>{amount}</AmountQtd>
+                )}
+
+                <AmountPlus onPress={() => productadd()}>
+                  <Icon name="plus" size={30} color="#dc7121"></Icon>
+                </AmountPlus>
               </AmountContnet>
+              <ContentTitile>Categoria</ContentTitile>
+              <AmountContnetItem>
+                <Amount>{products.product.category.name}</Amount>
+              </AmountContnetItem>
               <ContentTitile>Localização</ContentTitile>
-              <AmountContnet>
-                <Amount>{products.deposit.name}</Amount>
-              </AmountContnet>
-              <AmountContnet>
+              <AmountContnetItem>
+                <Amount>Depósito</Amount>
+                <AmountQtdItem>{products.deposit.prefix}</AmountQtdItem>
+              </AmountContnetItem>
+              <AmountContnetItem>
                 <Amount>Estante</Amount>
-                <AmountQtd>{products.shelf.name}</AmountQtd>
-              </AmountContnet>
-              <AmountContnet>
+                <AmountQtdItem>{products.shelf.name}</AmountQtdItem>
+              </AmountContnetItem>
+              <AmountContnetItem>
                 <Amount>Prateleira</Amount>
-                <AmountQtd>{products.plate.name}</AmountQtd>
-              </AmountContnet>
+                <AmountQtdItem>{products.plate.name}</AmountQtdItem>
+              </AmountContnetItem>
             </Content>
           ) : (
             <>

@@ -27,6 +27,7 @@ import api from '../../../services/api';
 import Button from '../../../components/Button';
 interface RouteParams {
   id: string;
+  idproductdeposit: string;
 }
 interface Product {
   name: string;
@@ -36,12 +37,13 @@ interface RouteParams {
   id: string;
 }
 const ProductEdit: React.FC = () => {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
 
   const [product, setProduct] = useState<Product | null>(null);
+  const [name, setName] = useState('');
 
   const route = useRoute();
-  const { id } = route.params as RouteParams;
+  const { id, idproductdeposit } = route.params as RouteParams;
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -56,33 +58,43 @@ const ProductEdit: React.FC = () => {
           'Erro de conexão',
           'Ocorreu um erro ao fazer requisição ao banco de dados',
         );
+        goBack();
       });
   }, [id]);
-
+  useEffect(() => {
+    setName(product?.name);
+  }, [product]);
   function handleSubmitCategory() {
     try {
-      if (product?.name == '') {
+      if (name == '') {
         Alert.alert('Digite o nome!');
         return;
       }
-      if (product?.amount == '') {
-        Alert.alert('Digite a quantidade!');
-        return;
-      }
-
       setLoading(true);
-      const responde = api.post('productdeposit', {
+      const responde = api.patch(`product/${id}/name`, {
         name,
-        amount,
       });
       setLoading(false);
 
-      Alert.alert('Cadastro realizado!');
-      goBack();
+      Alert.alert('Alteração realizada!');
     } catch {
-      Alert.alert('Erro no cadastro!');
+      Alert.alert('Erro!');
     }
   }
+  const productdelete = useCallback(() => {
+    api
+      .delete(`productdeposit/${idproductdeposit}`)
+      .then((response) => {
+        Alert.alert('Excluido');
+        navigate('Dashboard');
+      })
+      .catch(function (error: string): any {
+        Alert.alert(
+          'Erro de conexão',
+          'Ocorreu um erro ao fazer requisição ao banco de dados',
+        );
+      });
+  }, [product]);
   return (
     <>
       <StatusBar
@@ -105,25 +117,24 @@ const ProductEdit: React.FC = () => {
               <Icon name="chevron-left" size={24} color="#fff"></Icon>
             </BackButton>
             <Title>Editar Produto</Title>
-            <EditButton onPress={() => {}}></EditButton>
+            <BackButton
+              onPress={() => {
+                productdelete();
+              }}
+            >
+              <Icon name="trash" size={24} color="#fff"></Icon>
+            </BackButton>
           </Header>
         </Wrapper>
         {product ? (
           <Content>
             <Input
               keyboardType="decimal-pad"
-              value={product.name}
-              onChangeText={setProduct}
+              value={name}
+              onChangeText={setName}
               placeholder="Digite o nome"
               autoCorrect={false}
             ></Input>
-            <Input
-              value={product.amount}
-              onChangeText={setProduct}
-              placeholder="Digite a quantidade"
-              keyboardType="number-pad"
-            ></Input>
-
             <Button loading={loading} onPress={() => handleSubmitCategory()}>
               SALVAR
             </Button>

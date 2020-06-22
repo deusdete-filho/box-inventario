@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Box",
+    "name": "Box Inventário",
     "slug": "Box",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
@@ -16,7 +16,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.deusdetefilho.box",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.deusdetefilho.box",
+      "versionCode": 1
     }
   }
 }

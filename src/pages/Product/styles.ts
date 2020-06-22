@@ -13,6 +13,7 @@ export const Title = styled.Text`
   color: #fff;
   font-size: 20px;
   font-family: Roboto_500Medium;
+  text-transform: uppercase;
 `;
 
 export const Content = styled.ScrollView`
@@ -36,11 +37,20 @@ export const AmountContnet = styled.View`
   width: 100%;
   font-size: 20px;
   padding: 16px;
-  background: #fff;
   font-family: Roboto_400Regular;
   align-self: center;
   justify-content: space-between;
   flex-direction: row;
+`;
+export const AmountContnetItem = styled.View`
+  width: 100%;
+  font-size: 20px;
+  padding: 16px;
+  font-family: Roboto_400Regular;
+  align-self: center;
+  justify-content: space-between;
+  flex-direction: row;
+  background: #fff;
 `;
 export const Amount = styled.Text`
   font-size: 20px;
@@ -49,13 +59,17 @@ export const Amount = styled.Text`
   align-self: center;
 `;
 export const AmountQtd = styled.Text`
+  font-size: 30px;
+  color: #474747;
+  font-family: Roboto_700Bold;
+  align-self: center;
+`;
+export const AmountQtdItem = styled.Text`
   font-size: 22px;
   color: #474747;
   font-family: Roboto_700Bold;
   align-self: center;
-  background: #fff;
 `;
-
 export const BackButton = styled.TouchableOpacity`
   padding: 14px;
 `;
@@ -69,4 +83,10 @@ export const TitleContentList = styled.Text`
   font-family: Roboto_400Regular;
   align-self: center;
   padding: 30px;
+`;
+
+export const AmountPlus = styled.TouchableOpacity`
+  padding: 16px;
+  background: #fff;
+  border-radius: 5px;
 `;
