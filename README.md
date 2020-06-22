@@ -30,10 +30,14 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias
 ## :iphone: Telas
 
 <h4 align="center">
-    <img alt="Home" title="#home" width="300px" src=".github/2.png">
-    <img alt="Map" title="#map" width="300px" src=".github/3.png">
-    <img alt="Detail" title="#Detail" width="300px" src=".github/4.png">
-    <img alt="Detail" title="#Detail" width="300px" src=".github/5.png">
+    <img alt="Home" title="#home" width="250px" src=".github/2.png">
+    <img alt="Map" title="#map" width="250px" src=".github/3.png">
+    <img alt="Detail" title="#Detail" width="250px" src=".github/4.png">
+    <img alt="Detail" title="#Detail" width="250px" src=".github/5.png">
+    <img alt="Detail" title="#Detail" width="250px" src=".github/6.png">
+    <img alt="Detail" title="#Detail" width="250px" src=".github/7.png">
+        <img alt="Detail" title="#Detail" width="250px" src=".github/8.png">
+
 </h4>
 
 ---
