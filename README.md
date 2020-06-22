@@ -12,6 +12,8 @@ Desenvolvimento de uma aplicação para consulta de produtos no depósito de uma
 
 No app é possível cadastrar produtos nos depósito, com categoria, estante, prateleira e a quantidade.
 
+O sistema está integrado com uma API interna para cadastrar os produtos.
+
 <a id="tecnologias-utilizadas"></a>
 
 ## :rocket: Tecnologias Utilizadas
