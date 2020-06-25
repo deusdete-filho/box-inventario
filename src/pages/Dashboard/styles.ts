@@ -23,7 +23,10 @@ export const Title = styled.Text`
 export const Content = styled.View`
   flex: 1;
 `;
-export const ProductList = styled(FlatList as new () => FlatList<Product>)``;
+export const ProductList = styled(FlatList as new () => FlatList<Product>)`
+  width: 100%;
+  flex: 1;
+`;
 
 export const Device = styled(RectButton)`
   padding: 20px;
@@ -32,7 +35,6 @@ export const Device = styled(RectButton)`
   align-items: center;
   flex-direction: row;
   margin-bottom: 1px;
-  max-width: 500px;
 
   border-bottom-color: #ccc;
 `;

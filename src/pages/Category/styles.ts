@@ -31,7 +31,6 @@ export const Device = styled(RectButton)`
   align-items: center;
   flex-direction: row;
   margin-bottom: 1px;
-  max-width: 500px;
 `;
 export const TitleItem = styled.Text`
   font-size: 16px;
